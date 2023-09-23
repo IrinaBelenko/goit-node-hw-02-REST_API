@@ -13,8 +13,7 @@ const validateBody = (schema) => {
         next(HttpError(400, message));
       }
 
-      const message = `missing required ${error.details[0].path[0]} field`;
-      next(HttpError(400, message));
+      next(HttpError(400, error.details[0].message));
     }
     next();
   };
