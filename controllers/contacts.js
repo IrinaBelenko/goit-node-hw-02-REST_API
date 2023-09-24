@@ -4,7 +4,9 @@ const ctrlWrapper = require("../helpers/ctrlWrapper");
 
 const listContacts = async (req, res) => {
   const { _id: owner } = req.user;
-  const allContacts = await Contact.find({ owner });
+  const { page = 1, limit = 10 } = req.query;
+  const skip = (page - 1) * limit;
+  const allContacts = await Contact.find({ owner }, "", { skip, limit });
   res.json(allContacts);
 };
 
