@@ -1,8 +1,8 @@
 const { Schema, model } = require("mongoose");
-const { error } = require("../schemas/contacts");
+
 const handleMongooseError = require("../helpers/handleMongooseError");
 
-const contactsSchema = new Schema(
+const contactSchema = new Schema(
   {
     name: {
       type: String,
@@ -18,12 +18,16 @@ const contactsSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
   },
   { versionKey: false }
 );
 
-contactsSchema.post("save", handleMongooseError);
+contactSchema.post("save", handleMongooseError);
 
-const Contact = model("contact", contactsSchema);
+const Contact = model("contact", contactSchema);
 
 module.exports = Contact;
